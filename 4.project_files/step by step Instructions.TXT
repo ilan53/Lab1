@@ -1,0 +1,64 @@
+Instructions:
+- Create VPC with NAT Gateway(in case use private subnet)
+- Create a Cloud9Console under that VPC (for migrating and testing later)
+- Create Local-EC2 (server + local db)
+ 	- wait till its active
+ 	- success
+- now main part, decouple them to independent rds and server
+- Create RDS (allow ssh for testing, get request from EC2)
+ 	- MySQL
+ 	- Free Tier
+ 	- AdmissionVPC
+ 	- Create New Security Group
+ 	- DB Creation will take like 10 minutes
+- Create EC2 (only host server, not db)
+ 	- AdmissionKeyPair
+ 	- New Security Group (Only allow HTTP from anywhere)
+ 	- Any public subnet
+ 	- UserDataScript-phase-3.sh
+ 	- We dont have DB connected! Lets do it!
+- Connect EC2 with RDS
+ 	- Modify Security Group of RDS so that it can be accessed from the EC2 and the Console(for migration)
+ 	- Allow SQL access from console and EC2 Security Groups
+ 	- Go to Cloud9
+- Create Secret Manager, because the website code takes secret from the AWS secret manager, if not found then uses localhost
+ 	- Script 1
+ 	- Make sure to name the Mydbsecret, user, pass, rds-endpoint, database name correctly
+ 	- Import data from Test-EC2
+ 	- Export the data to RDS
+- Test Web App and RDS
+ 	-  Reboot the Admission - EC2
+
+	-  Wait 2-5 minutes for the reboot completion
+        -  Copy the public IP address of the EC2 and test
+        - Success !
+
+- Now lets implement Load Balancing
+ 	- EC2 > Load Balancing > Create
+ 	- All AZ, public only
+ 	- Create Security Group
+ 	- Users will send request to the load balancer directly
+ 	- Target Group is which EC2 we target
+ 	- We target Admission-EC2, we will autoscale it later
+ 	- Take the DNS, and test the site after the status becomes green
+ 	- It works!
+- However now it loads to only one instance, we will now autoscale using the image of this EC2
+
+- Auto Scaling
+ 	- Create AMI from the EC2
+ 	- AdmissionEC2 > Action > Image and template > Create Image
+ 	- AMI created, now use it to auto scale
+ 	- EC2 > Auto Scaling
+ 	- Create Launch Template with private subnet with Admission-EC2-Security Group
+ 	- Use UserDataScript-phase-3
+ 	- Use this to create the auto scaling in the previous page
+ 	- Use all private subnets
+ 	- Enable Cloud Watch Monitoring
+ 	- For auto scaling, choose as you prefer, i choose max 4
+ 	- It will take some times to setup, check in target group
+ 	- It works!
+- Lastly test the script to test load balancing!
+ 	- Go to cloud9
+ 	- Run the script (not /students)
+ 	- Check the website again, if doesnt work anymore, then reboot the database
+ 	- It works!

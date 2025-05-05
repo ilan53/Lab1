@@ -1,0 +1,17 @@
+קבוצה 11
+אילן חסקל: 315090506 , ליטל שוורץ : 316227297
+--------------------------------------------
+2.ArchitectureDiagram
+https://app.diagrams.net/#G1oSvSgqDdddSQSTKeJmg6XLqLh5kVw3gD#%7B%22pageId%22%3A%229pLOuRQe_eAPZX28Sv2e%22%7D
+
+3.cost_estimate
+https://calculator.aws/#/estimate?id=c2ef359f45966aefad17d70d44f2459ad7d3e20b
+
+5.GitHub_link
+https://github.com/ilan53/Lab1
+
+6.load_balancer
+http://Admission-LB-1075554931.us-east-1.elb.amazonaws.com/
+
+8.badge_links
+https://www.credly.com/badges/f8925d4a-f2dd-4dca-9ad8-08ff7446b9aa

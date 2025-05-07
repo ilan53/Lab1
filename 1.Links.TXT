@@ -15,3 +15,4 @@ http://Admission-LB-1075554931.us-east-1.elb.amazonaws.com/
 
 8.badge_links
 https://www.credly.com/badges/f8925d4a-f2dd-4dca-9ad8-08ff7446b9aa
+https://www.credly.com/badges/66175d86-ccd0-4e84-843b-d5447ea1d186/public_url
